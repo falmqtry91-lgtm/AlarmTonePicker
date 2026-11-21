@@ -1,0 +1,20 @@
+name: Build Extension
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Build AIX
+        run: ant extensions
+      - name: Upload AIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: AlarmTonePicker-AIX
+          path: out/*.aix
